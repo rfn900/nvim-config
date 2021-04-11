@@ -31,7 +31,7 @@ colorscheme one
 let $VIMPLUGDIRECTORY = '~/.config/nvim/plugged'
 let mapleader=" "
 set runtimepath+='~/.config/nvim/plugged'
-
+""
 let g:user_emmet_leader_key='<C-X>'
 imap <C-J> <Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
@@ -71,6 +71,7 @@ let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-html',
       \ ]
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}
 
 let g:NERDTreeIgnore = ['^node_modules$']
 " This is the default option:
@@ -283,15 +284,28 @@ let g:lightline = {
       \ 'colorscheme': 'one',
       \ 'active': {
       \  'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \             ['branch', 'changes', 'readonly', 'filename', 'modified' ]],
       \  'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'branch': 'LightlineGitBranch',
+      \   'changes': 'LightlineGitStatus'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
+      \ 'subseparator': { 'left': '', 'right': '' }         
       \ }
+function! LightlineGitBranch() abort
+  let branch = get(g:, 'coc_git_status', '')
+  " return branch
+  return winwidth(0) > 120 ? branch : ''
+endfunction
+
+function! LightlineGitStatus() abort
+  let changes = get(b:, 'coc_git_status', '')
+  " return changes
+  return winwidth(0) > 120 ? changes : ''
+endfunction
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -309,3 +323,7 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>p
+
+" navigate chunks of current buffer
+nmap [; <Plug>(coc-git-prevchunk)
+nmap ]; <Plug>(coc-git-nextchunk)
