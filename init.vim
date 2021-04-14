@@ -12,9 +12,13 @@ set noswapfile
 set incsearch
 set expandtab shiftwidth=2 softtabstop=2 tabstop=4 textwidth=80
 set modeline
+set cursorline
+set nowrap
 let g:snipMate = { 'snippet_version' : 1 }
 syntax on
 filetype plugin on
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 
 " Set inccommand
 set inccommand=nosplit
@@ -36,6 +40,21 @@ let g:user_emmet_leader_key='<C-X>'
 imap <C-J> <Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
 
+map s<left> <C-w>h
+map s<up> <C-w>k
+map s<down> <C-w>j
+map s<right> <C-w>l
+nmap <space><space> <C-w>w
+" Split window
+nmap ss :split<Return><C-w>w
+nmap sv :vsplit<Return><C-w>w
+" Delete a word backwards
+nnoremap dw vb"_d
+" Select all
+nmap <C-a> gg<S-v>G
+" Delete without yanking
+nnoremap <leader>d "_d
+nnoremap x "_x
 nnoremap <SPACE>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-m> :NERDTreeFind<CR>
@@ -229,6 +248,7 @@ augroup mygroup
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  "autocmd User CocGitStatusChange call LightlineReload()
 augroup end
 
 " Applying codeAction to the selected region.
@@ -327,3 +347,11 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>p
 " navigate chunks of current buffer
 nmap [; <Plug>(coc-git-prevchunk)
 nmap ]; <Plug>(coc-git-nextchunk)
+
+if has("unix")
+  let s:uname = system("uname -s")
+  " Do Mac stuff
+  if s:uname == "Darwin\n"
+      set clipboard+=unnamedplus
+  endif
+endif
