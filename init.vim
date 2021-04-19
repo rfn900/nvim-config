@@ -23,6 +23,7 @@ let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 " Set inccommand
 set inccommand=nosplit
 
+
 set mouse=a
 
 " Set nvim to true color
@@ -40,10 +41,10 @@ let g:user_emmet_leader_key='<C-X>'
 imap <C-J> <Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
 
-map s<left> <C-w>h
-map s<up> <C-w>k
-map s<down> <C-w>j
-map s<right> <C-w>l
+nmap sh <C-w>h
+nmap sk <C-w>k
+nmap sj <C-w>j
+nmap sl <C-w>l
 nmap <space><space> <C-w>w
 " Split window
 nmap ss :split<Return><C-w>w
@@ -52,6 +53,7 @@ nmap sv :vsplit<Return><C-w>w
 nnoremap dw vb"_d
 " Select all
 nmap <C-a> gg<S-v>G
+nmap <C-BS> <C-w>
 " Delete without yanking
 nnoremap <leader>d "_d
 nnoremap x "_x
@@ -64,8 +66,8 @@ nnoremap <SPACE>qq :q<CR>
 nnoremap <SPACE>pi :PlugInstall<CR>
 nnoremap <SPACE>w :w<CR>
 nnoremap <C-b> :Buffer<CR>
-nnoremap <C-d> :bd<CR>
-inoremap <C-q> <esc>
+nnoremap <C-d> :bd<CR> 
+inoremap <C-q> <esc>        
 nnoremap <SPACE><down> :t.<CR>
 nnoremap <SPACE>pv :wincmd v<CR>
 vnoremap J :m '>+1<CR>gv=gv
@@ -122,9 +124,24 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 let g:rainbow_active = 1
 "au FileType js,jsx,py,ejs,ts,json call rainbow#load()
 
+" Vim
+let g:indentLine_color_term = 239
+
+" GVim
+let g:indentLine_color_gui = '#28384e'
+
+" none X terminal
+let g:indentLine_color_tty_light = 2 " (default: 4)
+let g:indentLine_color_dark = 2 " (default: 2)
+
+" Background (Vim, GVim)
+let g:indentLine_bgcolor_term = 202
+let g:indentLine_bgcolor_gui = '#28384e'
+
 call plug#begin($VIMPLUGDIRECTORY)
 
 "Plug 'bling/vim-bufferline'
+Plug 'Yggdroot/indentLine'
 Plug 'ap/vim-buftabline'
 Plug 'preservim/nerdtree'
 Plug 'rafi/awesome-vim-colorschemes'
