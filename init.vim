@@ -26,6 +26,8 @@ set inccommand=nosplit
 
 set mouse=a
 
+let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog = '/usr/bin/python'
 " Set nvim to true color
 if has('termguicolors')
   set termguicolors
