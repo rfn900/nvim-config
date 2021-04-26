@@ -108,10 +108,10 @@ let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
 " Preview window on the upper side of the window with 40% height,
 " hidden by default, ctrl-/ to toggle
-let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
+"let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
 
 " Empty value to disable preview window altogether
-let g:fzf_preview_window = []
+"let g:fzf_preview_window = []
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
