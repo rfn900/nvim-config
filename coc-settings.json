@@ -11,6 +11,12 @@
     "css",
     "php"
   ],
+  "snippets.extends": {
+    "javascriptreact": ["javascript", "javascript-react"],
+    "typescriptreact": ["javascript", "javascript-jasmine-arrow"],
+    "typescript": ["javascript", "javascript-jasmine-arrow"]
+  },
+  "eslint.format.enable": true,
   "snippets.userSnippetsDirectory": "~/.config/nvim/plugged/vim-snippets/snippets/",
   "intelephense.diagnostics.undefinedFunctions": false,
   "prettier.semi": false,
