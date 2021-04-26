@@ -49,7 +49,7 @@ nmap sj <C-w>j
 nmap sl <C-w>l
 nmap <space><space> <C-w>w
 " Split window
-nmap ss :split<Return><C-w>w
+nmap sb :split<Return><C-w>w
 nmap sv :vsplit<Return><C-w>w
 " Delete a word backwards
 nnoremap dw vb"_d
@@ -59,6 +59,8 @@ nmap <C-BS> <C-w>
 " Delete without yanking
 nnoremap <leader>d "_d
 nnoremap x "_x
+
+inoremap <C-s> <ESC> :w<CR>
 nnoremap <SPACE>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-m> :NERDTreeFind<CR>
