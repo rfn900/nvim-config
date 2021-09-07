@@ -11,6 +11,7 @@
     "css",
     "php"
   ],
+  "snippets.snipmate.enable": true,
   "snippets.extends": {
     "javascriptreact": ["javascript", "javascript-react"],
     "typescriptreact": ["javascript", "javascript-jasmine-arrow"],
@@ -19,7 +20,7 @@
   "eslint.format.enable": true,
   "snippets.userSnippetsDirectory": "~/.config/nvim/plugged/vim-snippets/snippets/",
   "intelephense.diagnostics.undefinedFunctions": false,
-  "prettier.semi": false,
+  "prettier.semi": true,
   "python.jediPath": "/Users/rodrigonascimento/Library/Python/3.8/lib/python/site-packages",
   "python.linting.flake8Enabled": true,
   "git.enableGutters": true,
@@ -52,5 +53,12 @@
     "snippet": "\ue60b",
     "typeParameter": "\uf728",
     "default": "\uf29c"
+  },
+  "explorer.width": 30,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.previewAction.onHover": false,
+  "explorer.keyMappings.global": {
+    "<cr>": ["expandable?", "expand", "open"],
+    "v": "open:vsplit"
   }
 }
