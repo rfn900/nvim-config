@@ -2,6 +2,7 @@ set number
 set relativenumber
 
 " Column wrap at column 80
+set nohlsearch
 set colorcolumn=+1
 set encoding=UTF-8
 set noerrorbells 
@@ -17,8 +18,8 @@ set nowrap
 let g:snipMate = { 'snippet_version' : 1 }
 syntax on
 filetype plugin on
-let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\.DS_Store$', '\.git$']
+"let NERDTreeShowHidden=1
+"let NERDTreeIgnore=['\.DS_Store$', '\.git$']
 
 " Set inccommand
 set inccommand=nosplit
@@ -39,7 +40,7 @@ let $VIMPLUGDIRECTORY = '~/.config/nvim/plugged'
 let mapleader=" "
 set runtimepath+='~/.config/nvim/plugged'
 ""
-let g:user_emmet_leader_key='<C-X>'
+let g:user_emmet_leader_key='<C-x>'
 imap <C-J> <Plug>snipMateNextOrTrigger
 smap <C-J> <Plug>snipMateNextOrTrigger
 
@@ -52,35 +53,37 @@ nmap <space><space> <C-w>w
 nmap sb :split<Return><C-w>w
 nmap sv :vsplit<Return><C-w>w
 " Delete a word backwards
-nnoremap dw vb"_d
 " Select all
 nmap <C-a> gg<S-v>G
 nmap <C-BS> <C-w>
+,
 " Delete without yanking
+" Delete without yanking
+,
 nnoremap <leader>d "_d
 nnoremap x "_x
-
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+nnoremap <SPACE>gs :G<CR>
+nnoremap <SPACE>f :Rg<CR>
 inoremap <C-s> <ESC> :w<CR>
-nnoremap <SPACE>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-m> :NERDTreeFind<CR>
+"nnoremap <C-n> :NERDTreeToggle<CR>
+"nnoremap <C-m> :NERDTreeFind<CR>
 nnoremap <C-l> :Files<CR>
 nnoremap <SPACE>ss :so %<CR>
 nnoremap <SPACE>qq :q<CR>
-nnoremap <SPACE>pi :PlugInstall<CR>
 nnoremap <SPACE>w :w<CR>
 nnoremap <C-b> :Buffer<CR>
 nnoremap <C-d> :bd<CR> 
 inoremap <C-q> <esc>        
 nnoremap <SPACE><down> :t.<CR>
-nnoremap <SPACE>pv :wincmd v<CR>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 nmap <SPACE>r :NERDTreeFocus<cr>R<c-w><c-p>
 
 set hidden
-nnoremap <C-i> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
+nnoremap <SPACE><right> :bnext<CR>
+nnoremap <SPACE><left> :bprev<CR>
+nnoremap <C-P> :Rg<CR>
 
 command! -nargs=0 Nvimconfig :e ~/.config/nvim/init.vim
  "Fzf configuration
@@ -93,6 +96,8 @@ let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-html',
       \ 'coc-prettier',
       \ 'coc-pairs',
       \ 'coc-docker',
+      \ 'coc-tailwindcss',
+      \ 'coc-java',
       \ ]
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -147,12 +152,14 @@ call plug#begin($VIMPLUGDIRECTORY)
 "Plug 'bling/vim-bufferline'
 Plug 'Yggdroot/indentLine'
 Plug 'ap/vim-buftabline'
-Plug 'preservim/nerdtree'
+"Plug 'preservim/nerdtree'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'yuki-ycino/fzf-preview.vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'alvan/vim-closetag'
+Plug 'tpope/vim-surround'
 "Plug 'frazrepo/vim-rainbow'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
@@ -164,6 +171,8 @@ Plug 'mattn/emmet-vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 
+Plug 'tpope/vim-liquid'
+
 Plug 'garbas/vim-snipmate'
 
 Plug 'honza/vim-snippets'
@@ -171,6 +180,51 @@ Plug 'honza/vim-snippets'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
+
+
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.jsx'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml,js,jsx'
+
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx,js'
+
+" integer value [0|1]
+" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 1
+
+" dict
+" Disables auto-close if not in a valid region (based on filetype)
+"
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
+    \ }
+
+" Shortcut for closing tags, default is '>'
+"
+let g:closetag_shortcut = '>'
+
+" Add > at current position without closing the current tag, default is ''
+"
+let g:closetag_close_shortcut = '<leader>>'
+
 
 "Config for Coc-vim 
 
@@ -351,7 +405,8 @@ endfunction
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+"nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <space>e :CocCommand explorer --toggle<CR>
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
@@ -364,11 +419,13 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>p
-
+nmap gs <Plug>(coc-git-chunkinfo)
+" show commit contains current position
+nmap gc <Plug>(coc-git-commit)
 " navigate chunks of current buffer
 nmap [; <Plug>(coc-git-prevchunk)
 nmap ]; <Plug>(coc-git-nextchunk)
-
+nmap ;; :CocCommand git.chunkStage<cr>
 if has("unix")
   let s:uname = system("uname -s")
   " Do Mac stuff
